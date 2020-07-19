@@ -2,6 +2,8 @@
 import logging
 import time
 
+import pdb
+
 from typing import Dict
 from typing import Hashable
 from typing import List
@@ -150,6 +152,8 @@ class VersionSolver:
         # inconclusive for incompatibility and we can't deduce anything.
         unsatisfied = None
 
+        pdb.set_trace()
+
         for term in incompatibility.terms:
             relation = self._solution.relation(term)
 
@@ -179,6 +183,8 @@ class VersionSolver:
         self._solution.derive(
             unsatisfied.constraint, not unsatisfied.is_positive(), incompatibility
         )
+
+        pdb.set_trace()
 
         return unsatisfied.package
 
