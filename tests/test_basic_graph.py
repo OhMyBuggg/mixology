@@ -63,3 +63,15 @@ def test_circular_dependency(source):
     source.add("bar", "1.0.0", deps={"foo": "1.0.0"})
 
     check_solver_result(source, {"foo": "1.0.0", "bar": "1.0.0"})
+
+
+def test_empty(source):
+    source.add("a", "1.0.0", deps={"aa": "1.0.0", "ab": "1.0.0"})
+    source.add("b", "1.0.0", deps={"ba": "1.0.0", "bb": "1.0.0"})
+    source.add("aa", "1.0.0")
+    source.add("ab", "1.0.0")
+    source.add("ba", "1.0.0")
+    source.add("bb", "1.0.0")
+
+    check_solver_result(source, {})
+
