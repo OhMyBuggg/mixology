@@ -152,7 +152,7 @@ class VersionSolver:
         # inconclusive for incompatibility and we can't deduce anything.
         unsatisfied = None
 
-        pdb.set_trace()
+        # pdb.set_trace()
 
         for term in incompatibility.terms:
             relation = self._solution.relation(term)
@@ -184,7 +184,7 @@ class VersionSolver:
             unsatisfied.constraint, not unsatisfied.is_positive(), incompatibility
         )
 
-        pdb.set_trace()
+        # pdb.set_trace()
 
         return unsatisfied.package
 
@@ -201,6 +201,7 @@ class VersionSolver:
 
         .. _conflict resolution: https://github.com/dart-lang/pub/tree/master/doc/solver.md#conflict-resolution
         """
+        pdb.set_trace()
         logger.info("conflict: {}".format(incompatibility))
 
         new_incompatibility = False
@@ -320,6 +321,8 @@ class VersionSolver:
                 '{} which is caused by "{}"'.format(bang, most_recent_satisfier.cause)
             )
             logger.info("{} thus: {}".format(bang, incompatibility))
+
+            pdb.set_trace()
 
         raise SolverFailure(incompatibility)
 
