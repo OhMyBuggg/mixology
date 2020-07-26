@@ -45,6 +45,7 @@ class VersionSolver:
 
         self._incompatibilities = {}  # type: Dict[Hashable, List[Incompatibility]]
         self._solution = PartialSolution()
+        self.count_choose = 0
 
     @property
     def solution(self):  # type: () -> PartialSolution
@@ -69,7 +70,7 @@ class VersionSolver:
 
         i = 0
         while not self.is_solved():
-            if not self._run() or i > 10:
+            if not self._run() or i > 30:
                 break
 
             i += 1
@@ -134,7 +135,7 @@ class VersionSolver:
                 elif result is not None:
                     changed.add(result)
 
-    def _propagate_incompatibility(
+    def _propagate_incompatibility( # 這邊我很不懂 要問大腿
         self, incompatibility
     ):  # type: (Incompatibility) -> Union[str, _conflict, None]
         """
@@ -201,7 +202,7 @@ class VersionSolver:
 
         .. _conflict resolution: https://github.com/dart-lang/pub/tree/master/doc/solver.md#conflict-resolution
         """
-        pdb.set_trace()
+        # pdb.set_trace()
         logger.info("conflict: {}".format(incompatibility))
 
         new_incompatibility = False
@@ -322,7 +323,7 @@ class VersionSolver:
             )
             logger.info("{} thus: {}".format(bang, incompatibility))
 
-            pdb.set_trace()
+            # pdb.set_trace()
 
         raise SolverFailure(incompatibility)
 
@@ -388,6 +389,7 @@ class VersionSolver:
             self._solution.decide(term.package, version)
             logger.info("selecting {} ({})".format(term.package, str(version)))
 
+        self.count_choose += 1
         return term.package
 
     def _add_incompatibility(self, incompatibility):  # type: (Incompatibility) -> None

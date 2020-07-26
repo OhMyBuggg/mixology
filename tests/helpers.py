@@ -27,6 +27,8 @@ def check_solver_result(source, result=None, error=None, tries=None):
         packages[package] = str(version)
 
     assert result == packages
+    print('\n')
+    print('package choose: {}'.format(solver.count_choose))
 
     if tries is not None:
         assert solution.attempted_solutions == tries

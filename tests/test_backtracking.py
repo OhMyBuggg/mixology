@@ -145,3 +145,25 @@ def test_backjump_past_failed_package_on_disjoint_constraint(source):
     source.add("foo", "2.0.4")
 
     check_solver_result(source, {"a": "1.0.0", "foo": "2.0.4"})
+
+def test_speed(source):
+    source.root_dep("menu", ">=1.0.0")
+    source.root_dep("icons", "1.0.0")
+
+    source.add("menu", "1.5.0", deps={"dropdown": ">=2.0.0"})
+    source.add("menu", "1.4.0", deps={"dropdown": ">=2.0.0"})
+    source.add("menu", "1.3.0", deps={"dropdown": ">=2.0.0"})
+    source.add("menu", "1.2.0", deps={"dropdown": ">=2.0.0"})
+    source.add("menu", "1.1.0", deps={"dropdown": ">=2.0.0"})
+    source.add("menu", "1.0.0", deps={"dropdown": "1.8.0"})
+
+    source.add("dropdown", "2.3.0", deps={"icons": "2.0.0"})
+    source.add("dropdown", "2.2.0", deps={"icons": "2.0.0"})
+    source.add("dropdown", "2.1.0", deps={"icons": "2.0.0"})
+    source.add("dropdown", "2.0.0", deps={"icons": "2.0.0"})
+    source.add("dropdown", "1.8.0")
+
+    source.add("icons", "2.0.0")
+    source.add("icons", "1.0.0")
+
+    check_solver_result(source, {"icons": "1.0.0", "menu": "1.0.0", "dropdown": "1.8.0"})
