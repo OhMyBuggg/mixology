@@ -1,5 +1,17 @@
 from .helpers import check_solver_result
 
+def test_simple(source):
+    source.root_dep("rack", "1.1")
+
+    source.add("rack", "0.8")
+    source.add("rack", "0.9")
+    source.add("rack", "0.9.1")
+    source.add("rack", "0.9.2")
+    source.add("rack", "1.0")
+    source.add("rack", "1.1")
+
+    check_solver_result(source, {"rack": "1.1"})
+
 
 def test_simple_dependencies(source):
     source.root_dep("a", "1.0.0")
@@ -74,4 +86,3 @@ def test_empty(source):
     source.add("bb", "1.0.0")
 
     check_solver_result(source, {})
-
